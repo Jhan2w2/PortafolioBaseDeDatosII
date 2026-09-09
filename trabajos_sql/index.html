@@ -1,1 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio BASE DE DATOS 2 - Jhan Marco</title>
+    
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body class="light-mode">
+
+    <div id="toast-container"></div>
+
+    <div id="login-overlay">
+        <div id="particles-container"></div>
+        <div class="login-card">
+            <div class="close-login" onclick="cerrarLoginModal()"><i class='bx bx-x'></i></div>
+            <div class="login-avatar"><i class="fa-solid fa-user-shield"></i></div>
+            
+            <h2 id="auth-title">Acceso <span class="gradient-text">Admin</span></h2>
+            <p class="login-subtitle">Ingresa tus credenciales para administrar los archivos</p>
+            
+            <div class="input-group">
+                <i class='bx bx-envelope input-icon'></i>
+                <input type="email" id="username" placeholder="Correo de Administrador">
+            </div>
+            <div class="input-group">
+                <i class='bx bx-lock-alt input-icon'></i>
+                <input type="password" id="password" placeholder="Contraseña">
+                <i class='bx bx-hide toggle-password' id="togglePassword"></i>
+            </div>
+            <p id="login-error"><i class='bx bx-error-circle'></i> Credenciales incorrectas.</p>
+            
+            <button class="login-btn" onclick="procesarAuth()">
+                <span id="btn-auth-text">Ingresar como Administrador</span>
+                <i class="fa-solid fa-key"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="preview-modal" onclick="cerrarPreviewModal()">
+        <div class="preview-card" onclick="event.stopPropagation()">
+            <div class="preview-header">
+                <h3 id="preview-title"><i class="fa-solid fa-file-lines"></i> Vista Previa del Documento</h3>
+                <div class="close-preview" onclick="cerrarPreviewModal()"><i class='bx bx-x'></i></div>
+            </div>
+            <div id="preview-container" style="position: relative; flex-grow: 1; border-radius: 10px; overflow: hidden; background: transparent;"></div>
+            
+            <button class="btn-fullscreen-modal" onclick="toggleFullScreenModal()" title="Pantalla Completa">
+                <i class="fa-solid fa-expand"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="container" id="main-portfolio">
+        <video class="back-vid" autoplay loop muted plays-inline src="videos/galaxy.mp4" onerror="this.style.display='none'"></video>
+
+        <header data-aos="fade-down" data-aos-duration="2000">
+            <div class="brand">
+                <img src="images/logo_upla_sin_fondo_1_20240529_1151847739.png" alt="logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1183/1183672.png'">
+                <h2>
+                    <span class="name-bold">Jhan Marco</span> 
+                    <span class="name-light">Mucha Quinto</span>
+                </h2>
+            </div>
+
+            <ul>
+                <li><a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="#sobre-mi"><i class="fa-solid fa-user"></i> Sobre mí</a></li>
+                <li><a href="#habilidades"><i class="fa-solid fa-brain"></i> Habilidades</a></li>
+                <li><a href="#proyectos"><i class="fa-solid fa-briefcase"></i> Proyectos</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Cambiar Tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <button id="btn-auth-header" class="btn-auth" onclick="abrirLogin()">
+                    <i class="fa-solid fa-right-to-bracket"></i> <span id="text-auth-header">Iniciar Sesión</span>
+                </button>
+            </div>
+
+            <div class="menu-icon"><i class='bx bx-menu'></i></div>          
+        </header>
+
+        <div class="sidebar">
+            <div class="close-icon"><i class='bx bx-x'></i></div>
+            <ul>
+                <li><a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="#sobre-mi"><i class="fa-solid fa-user"></i> Sobre mí</a></li>
+                <li><a href="#habilidades"><i class="fa-solid fa-brain"></i> Habilidades</a></li>
+                <li><a href="#proyectos"><i class="fa-solid fa-briefcase"></i> Proyectos</a></li>
+                <li><a href="javascript:void(0);" id="btn-auth-sidebar" onclick="abrirLogin()"><i class="fa-solid fa-shield-halved"></i> <span id="text-auth-sidebar">Iniciar Sesión</span></a></li>
+                <li><a href="javascript:void(0);" onclick="toggleTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Cambiar Tema</a></li>
+            </ul>
+        </div>
+
+        <div class="blackhole-box" data-aos="fade-down" data-aos-duration="2000">
+            <video autoplay loop muted plays-inline src="videos/blackhole.mp4" onerror="this.style.display='none'"></video>
+        </div>
+
+        <section class="hero" id="inicio">
+            <div class="hero-info autoBlur" data-aos="fade-right" data-aos-duration="1000">
+                <div class="hero-info-title"><i class="fa-solid fa-server"></i> Portafolio de Base de Datos 2</div>
+                <h1 data-aos="fade-right" data-aos-duration="3000">Construyendo la <span class="gradient">mejor</span> Arquitectura <span class="gradient">de Datos</span></h1>
+                <p>Bienvenido a mi portafolio del curso de Base de Datos 2. Aquí encontrarás todos mis diagramas, modelados y scripts avanzados en SQL Server.</p>
+                <button onclick="document.getElementById('proyectos').scrollIntoView();"><i class="fa-solid fa-folder-open"></i> Ver Trabajos</button>
+            </div>
+            <div class="hero-logo-box autoBlur" data-aos="fade-left" data-aos-duration="1500">
+                <img class="hero-logo" src="images/logo_upla_sin_fondo_1_20240529_1151847739.png" alt="Logo Universidad Peruana Los Andes" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_UPLA_-_Universidad_Peruana_Los_Andes.png/1200px-Logo_UPLA_-_Universidad_Peruana_Los_Andes.png'">
+            </div>
+        </section>
+
+        <section class="info-section" id="sobre-mi">
+            <h1 class="section-title autoDisplay">¡Hola, qué tal! 👋</h1>
+            <img src="images/mi-foto.jpg" alt="Foto de Jhan Marco" class="foto-perfil-mini autoDisplay" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4140/4140048.png'">
+            <div class="info-cards">
+                <div class="card autoDisplay">
+                    <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&q=80" alt="Código SQL">
+                    <h1>Soy Estudiante de Base de Datos 2</h1>
+                    <p>Este es mi espacio personal diseñado para mostrar el modelado de datos y la creación de consultas avanzadas.</p>
+                </div>
+                <div class="card autoDisplay">
+                    <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80" alt="Análisis de Datos">
+                    <h1>Mi Pasión por los Datos</h1>
+                    <p>Me fascina estructurar información, asegurar la integridad mediante normalización estricta y crear procedimientos almacenados altamente optimizados.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section" id="habilidades">
+            <h1 class="section-title autoDisplay">Mis Habilidades Técnicas <i class="fa-solid fa-dumbbell"></i></h1>
+            <div class="skills-box autoDisplay">
+                <div class="skill-card">
+                    <h1 class="gradient">Diseño de BD <i class="fa-solid fa-diagram-project"></i></h1>
+                    <p>Diseño modelos Entidad-Relación y relacionales, aplico reglas de normalización hasta la 3FN y utilizo herramientas de diagramado profesional.</p>  
+                </div>
+                <div class="skill-card">
+                    <h1 class="gradient">Desarrollo SQL <i class="fa-solid fa-code"></i></h1>
+                    <p>Manejo de consultas T-SQL, restricciones (PK, FK), INNER JOINs complejos, subconsultas y procedimientos almacenados en SQL Server.</p>
+                </div>
+            </div>
+
+            <div class="slider autoBlur" style="--width: 80px; --height: 80px; --quantity: 9;">
+                <div class="list">
+                    <div class="item" style="--position: 1"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server" title="SQL Server"></div>
+                    <div class="item" style="--position: 2"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" title="MySQL"></div>
+                    <div class="item" style="--position: 3"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" title="PostgreSQL"></div>
+                    <div class="item" style="--position: 4"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" alt="Azure" title="Microsoft Azure"></div>
+                    <div class="item" style="--position: 5"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" title="Java"></div>
+                    <div class="item" style="--position: 6"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" title="HTML5"></div>
+                    <div class="item" style="--position: 7"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" title="CSS3"></div>
+                    <div class="item" style="--position: 8"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" title="JavaScript"></div>
+                    <div class="item" style="--position: 9"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" title="GitHub" style="filter: invert(1);"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-project" id="proyectos">
+            <h1 class="section-title autoDisplay">Mi Portafolio <span class="gradient">(4 Unidades)</span> <i class="fa-solid fa-laptop-code"></i></h1>
+            
+            <div class="unidad-container autoDisplay">
+                <h2 class="unidad-title"><i class="fa-solid fa-folder-tree"></i> Unidad I (Semanas 1 - 4)</h2>
+                <div class="weeks-grid">
+                    <div class="week-card" data-semana="1">
+                        <h2><i class="fa-solid fa-diagram-project"></i> Semana 1</h2>
+                        <p class="desc-text">Modelo conceptual inicial del sistema de base de datos.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="2">
+                        <h2><i class="fa-solid fa-table-cells-large"></i> Semana 2</h2>
+                        <p class="desc-text">Reporte de normalización de tablas (1FN, 2FN, 3FN).</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="3">
+                        <h2><i class="fa-solid fa-key"></i> Semana 3</h2>
+                        <p class="desc-text">Definición de llaves primarias y foráneas (Integridad Referencial).</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="4">
+                        <h2><i class="fa-solid fa-code-merge"></i> Semana 4</h2>
+                        <p class="desc-text">Consultas con INNER JOIN múltiples.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unidad-container autoDisplay">
+                <h2 class="unidad-title"><i class="fa-solid fa-database"></i> Unidad II (Semanas 5 - 8)</h2>
+                <div class="weeks-grid">
+                    <div class="week-card" data-semana="5">
+                        <h2><i class="fa-solid fa-calculator"></i> Semana 5</h2>
+                        <p class="desc-text">Aún no hay archivos subidos.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="6">
+                        <h2><i class="fa-solid fa-magnifying-glass-chart"></i> Semana 6</h2>
+                        <p class="desc-text">Aún no hay archivos subidos.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="7">
+                        <h2><i class="fa-solid fa-terminal"></i> Semana 7</h2>
+                        <p class="desc-text">Aún no hay archivos subidos.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="8" style="border-color: rgba(234, 179, 8, 0.5);">
+                        <h2 style="color: #eab308;"><i class="fa-solid fa-graduation-cap"></i> Semana 8</h2>
+                        <p class="desc-text">Semana de Exámenes Parciales de BD2.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unidad-container autoDisplay">
+                <h2 class="unidad-title"><i class="fa-solid fa-layer-group"></i> Unidad III (Semanas 9 - 12)</h2>
+                <div class="weeks-grid">
+                    <div class="week-card" data-semana="9">
+                        <h2><i class="fa-solid fa-layer-group"></i> Semana 9</h2>
+                        <p class="desc-text">Subconsultas y Vistas.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="10">
+                        <h2><i class="fa-solid fa-gears"></i> Semana 10</h2>
+                        <p class="desc-text">Procedimientos Almacenados (CRUD).</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="11">
+                        <h2><i class="fa-solid fa-bolt"></i> Semana 11</h2>
+                        <p class="desc-text">Triggers (DML).</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="12">
+                        <h2><i class="fa-solid fa-shield-halved"></i> Semana 12</h2>
+                        <p class="desc-text">Transacciones y Control de Errores.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unidad-container autoDisplay">
+                <h2 class="unidad-title"><i class="fa-solid fa-flag-checkered"></i> Unidad IV (Semanas 13 - 16)</h2>
+                <div class="weeks-grid">
+                    <div class="week-card" data-semana="13">
+                        <h2><i class="fa-solid fa-square-root-variable"></i> Semana 13</h2>
+                        <p class="desc-text">Funciones Escalares y de Tabla.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="14">
+                        <h2><i class="fa-solid fa-arrow-pointer"></i> Semana 14</h2>
+                        <p class="desc-text">Aún no hay archivos subidos.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="15">
+                        <h2><i class="fa-solid fa-chart-line"></i> Semana 15</h2>
+                        <p class="desc-text">Optimización y Planes de Ejecución.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="week-card" data-semana="16" style="border-color: rgba(34, 197, 94, 0.5); background: rgba(34, 197, 94, 0.05);">
+                        <h2 style="color: #22c55e;"><i class="fa-solid fa-trophy"></i> Semana 16</h2>
+                        <p class="desc-text">Proyecto Final Sustentatorio de Base de Datos 2.</p>
+                        <div class="files-container"></div>
+                        <div class="admin-controls">
+                            <button class="btn-admin btn-upload" title="Añadir Archivo"><i class="fa-solid fa-upload"></i> Subir</button>
+                            <button class="btn-admin btn-save" title="Guardar Cambios"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                            <button class="btn-admin btn-edit" title="Modificar Descripción"><i class="fa-solid fa-pen"></i> Modificar</button>
+                            <button class="btn-admin btn-delete" title="Borrar Semana Completa"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section> 
+
+        <section class="footer" style="justify-content: center;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <a href="#" target="_blank" class="github-icon-footer" title="Mi Perfil de GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <h1 style="display: flex; align-items: center; gap: 6px; margin: 0; font-size: 14px;">
+                    <i class="fa-regular fa-copyright" style="color: #d946ef; font-size: 18px;"></i> 
+                    2026, Portafolio Diseñado para el Curso de Base de Datos 2
+                </h1>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts Externos Originales -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Enlace al archivo JS externo -->
+    <script src="script.js"></script>
+</body>
+</html>
