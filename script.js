@@ -1122,7 +1122,6 @@ async function ejecutarEnvio() {
 (function () {
   let ctx = null;
 
-  // El AudioContext se crea recien en el primer clic real del usuario
   function getCtx() {
     if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
     return ctx;
@@ -1139,7 +1138,6 @@ async function ejecutarEnvio() {
     osc.frequency.setValueAtTime(freq, t);
     osc.frequency.exponentialRampToValueAtTime(freq * 1.7, t + 0.07);
 
-    // envolvente: ataque rapido + caida suave (sonido "HUD")
     gain.gain.setValueAtTime(0.0001, t);
     gain.gain.exponentialRampToValueAtTime(0.13, t + 0.012);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.20);
@@ -1152,7 +1150,6 @@ async function ejecutarEnvio() {
 
   function reproducir(freq, tipo) {
     const ac = getCtx();
-    // CLAVE: esperar a que el contexto despierte antes de sonar
     if (ac.state === 'suspended') {
       ac.resume().then(function () { beep(freq, tipo); });
     } else {
@@ -1161,22 +1158,23 @@ async function ejecutarEnvio() {
   }
 
   // Selectores de todo lo "presionable" del portafolio
-  const SELECTOR = 'button, a, .btn-ver, .btn-auth, .btn-admin, .btn-square, ' +
+  // (incluye week-card completa, cualquier elemento con onclick, y botones del chatbot)
+  const SELECTOR = 'button, a, [onclick], .btn-ver, .btn-auth, .btn-admin, .btn-square, ' +
                    '.quick-chip, .theme-toggle, .menu-icon, .close-icon, ' +
-                   '.file-left, .login-btn, .close-login, .close-preview';
+                   '.file-left, .login-btn, .close-login, .close-preview, ' +
+                   '.week-card, .card, .skill-card, .unidad-title, ' +
+                   '.chatbot-avatar, #chatbot-toggle, #chatbot-close, #chatbot-send';
 
-  // pointerdown + fase de captura = suena aunque otro handler corte el evento
   document.addEventListener('pointerdown', function (e) {
     const el = e.target.closest(SELECTOR);
     if (!el) return;
 
-    // tonos distintos segun el tipo de accion
     if (el.matches('.btn-delete, .btn-delete-file, .close-login, .close-preview, .close-icon')) {
-      reproducir(320, 'sawtooth');   // cerrar / eliminar: grave
+      reproducir(320, 'sawtooth');
     } else if (el.matches('.hero-info button, .login-btn, .btn-ver, .btn-save')) {
-      reproducir(620, 'triangle');   // accion principal: medio
+      reproducir(620, 'triangle');
     } else {
-      reproducir(900, 'triangle');   // navegacion / opciones: agudo
+      reproducir(900, 'triangle');
     }
   }, true);
 })();
